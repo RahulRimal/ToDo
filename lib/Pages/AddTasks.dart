@@ -64,7 +64,7 @@ class _AddTasksState extends State<AddTasks> {
               } else {
                 todoList.AddToDo(_validateTextField.text);
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage()));
+                    MaterialPageRoute(builder: (context) => HomePage(todoList)));
               }
             },
             icon: Icon(Icons.check),
