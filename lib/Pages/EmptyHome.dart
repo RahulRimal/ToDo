@@ -1,12 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutterappdfdfdfdfd/Pages/AddTasks.dart';
+import 'package:flutterappdfdfdfdfd/UserRelated/Todos.dart';
 
 class EmptyHome extends StatefulWidget {
+
+  final TodoList todoList;
+
+  EmptyHome(this.todoList);
+
   @override
   _EmptyHomeState createState() => _EmptyHomeState();
 }
 
 class _EmptyHomeState extends State<EmptyHome> {
+
+  TodoList todoList;
+  @override
+  void initState() {
+    super.initState();
+    todoList = widget.todoList;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +50,7 @@ class _EmptyHomeState extends State<EmptyHome> {
           onPressed: (){
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => AddTasks())
+              MaterialPageRoute(builder: (context) => AddTasks(todoList))
             );
           },
           child: Text('Add Notes'),

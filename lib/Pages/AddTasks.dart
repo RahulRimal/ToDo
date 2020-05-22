@@ -3,17 +3,36 @@ import 'package:flutterappdfdfdfdfd/Pages/Home.dart';
 import 'package:flutterappdfdfdfdfd/UserRelated/Todos.dart';
 
 class AddTasks extends StatefulWidget {
+  final TodoList todoList;
+
+  AddTasks(this.todoList);
+
   @override
   _AddTasksState createState() => _AddTasksState();
 }
 
 class _AddTasksState extends State<AddTasks> {
+  TodoList todo;
+
+  @override
+  void initState() {
+    super.initState();
+    todo = widget.todoList;
+  }
+
   final _validateTextField = TextEditingController();
 
   var time = DateTime.now();
 //  var format = new DateFormat.yMMMMd('en_US');
 
-  TodoList todoList = new TodoList();
+  bool _bulletEnabled = false;
+
+  Widget _showBullet(bool _bulletEnabled) {
+    return Visibility(
+      visible: _bulletEnabled,
+      child: Icon(Icons.arrow_forward),
+    );
+  }
 
   void alertCancel() async {
     await showDialog(
@@ -62,9 +81,9 @@ class _AddTasksState extends State<AddTasks> {
               if (_validateTextField.text.isEmpty) {
                 Navigator.pop(context);
               } else {
-                todoList.AddToDo(_validateTextField.text);
+                todo.AddToDo(_validateTextField.text);
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomePage(todoList)));
+                    MaterialPageRoute(builder: (context) => HomePage(todo)));
               }
             },
             icon: Icon(Icons.check),
@@ -84,33 +103,41 @@ class _AddTasksState extends State<AddTasks> {
               TextField(
                 controller: _validateTextField,
                 decoration: InputDecoration(
+                  prefixIcon: _showBullet(_bulletEnabled),
                   labelText: 'Type here !!',
                 ),
                 maxLines: 20,
               ),
+
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.check_circle,
-              size: 35.0,
+      bottomNavigationBar: BottomNavigationBar(
+          selectedIconTheme: IconThemeData(color: Colors.redAccent),
+          items: [
+            BottomNavigationBarItem(
+              icon: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _bulletEnabled = !_bulletEnabled;
+                  });
+                },
+                icon: Icon(Icons.arrow_forward),
+              ),
+              title: Text('Bullet'),
             ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.image,
-              size: 35.0,
+            BottomNavigationBarItem(
+              icon: IconButton(
+                onPressed: () {
+                  setState(() {
+                  });
+                },
+                icon: Icon(Icons.image),
+              ),
+              title: Text('Image'),
             ),
-          ),
-        ],
-      ),
+          ]),
     );
   }
 }

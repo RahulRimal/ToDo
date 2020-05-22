@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterappdfdfdfdfd/Pages/EmptyHome.dart';
+import 'Pages/EmptyHome.dart';
 import 'Pages/Home.dart';
 import 'UserRelated/Todos.dart';
 
@@ -13,8 +13,7 @@ class MyTodoApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
 
-      home: _checkTodo.toDos.isEmpty ? EmptyHome() : HomePage(),
+      home: HomePage(_checkTodo),//_checkTodo.toDos.isEmpty ? EmptyHome(_checkTodo) : HomePage(_checkTodo),
     );
   }
 }
-
